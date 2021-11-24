@@ -58,24 +58,15 @@ struct hw3_cfg : public FunctionPass {
                 // Print out that we have encountered a call instruction
                 errs() << "Encountered a call instruction " << CI << "\n";
                 //Print out function name
-                outs() << " |-" << CI->getCalledFunction()->getName() << "\n"
+                outs() << " |-" << CI->getCalledFunction()->getName() << "\n";
                 if(dominates(CI, BBF)){
                     errs() << "Encountered a key block " << CI << "\n";   
                     ofile.printKeyBlock(BB);
                 }
              }
         }
-        
       }
     ofile.printKeyBlock(BBF);
     return false;
   }
-}
-char FunctionsNames::ID = 0;
-static RegisterPass<FunctionsNames> X("func-names", "Display Function Names",
-    false /* Only looks at CFG */,
-    false /* Analysis Pass */);
-static RegisterStandardPasses Y(
-    PassManagerBuilder::EP_EarlyAsPossible,
-    [](const PassManagerBuilder &Builder,
-      legacy::PassManagerBase &PM) { PM.add(new FunctionsNames()); });
+};
